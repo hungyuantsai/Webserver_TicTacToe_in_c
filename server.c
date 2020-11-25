@@ -630,7 +630,6 @@ int main() {
                         send(socket_source, buf, strlen(buf), 0);
                         memset(buf, '\0', BUFSIZE);
                     }
-
                     
                     // view the list of gaming players
                     else if (strcmp(arg1, "game") == 0 && strcmp(arg2, "list") == 0)
