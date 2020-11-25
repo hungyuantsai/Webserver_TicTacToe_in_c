@@ -613,18 +613,9 @@ int main() {
                             {
                                 temp->sockfd = -1;
                                 temp->win_amt = 0;
-                                temp->lose_amt = 0;Player *temp = players;
-                        while (temp != NULL)
-                        {
-                            if (temp->sockfd != -1)
-                            {
-                                strcat(buf, temp->account);
-                                strcat(buf, ", ");
-                            }
-                            temp = temp->next;
-                        }
-                        send(socket_source, buf, sizeof(buf), 0);
-                                sprintf(buf, "Goobye, %s!", temp->account);
+                                temp->lose_amt = 0;
+                                sprintf(buf, "Goobye, %s!\n", temp->account);
+                                send(socket_source, buf, strlen(buf), 0);
                                 printf("%s has just logged out!\n", temp->account);
                                 memset(buf, '\0', BUFSIZE);
                                 break;
@@ -640,6 +631,7 @@ int main() {
                         memset(buf, '\0', BUFSIZE);
                     }
 
+                    
                     // view the list of gaming players
                     else if (strcmp(arg1, "game") == 0 && strcmp(arg2, "list") == 0)
                     {
