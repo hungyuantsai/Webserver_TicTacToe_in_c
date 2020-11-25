@@ -136,6 +136,7 @@ int main() {
                     memset(buf, '\0', BUFSIZE);
                     // create account
                     if (strcmp(arg1, "create") == 0){
+                        memset(buf, '\0', BUFSIZE);
                         Player *temp;
                         temp = players;
                         Player *new_player = (Player *)malloc(sizeof(Player));
@@ -167,11 +168,12 @@ int main() {
                         strcat(buf, "!");
                         strcat(buf, " We are happy for your join!");
                         send(socket_source, buf, sizeof(buf), 0);
+                        memset(buf, '\0', BUFSIZE);
                     }
                     // login
                     else if (strcmp(arg1, "login") == 0)
                     {
-                        memset(buf,0,BUFSIZE);
+                        memset(buf, '\0', BUFSIZE);
                         Player *temp;
                         temp = players;
                         while (temp != NULL)
@@ -206,11 +208,13 @@ int main() {
                             strcpy(buf, "account is not existed.");
                             send(socket_source, buf, sizeof(buf), 0);
                         }
+                        memset(buf, '\0', BUFSIZE);
                     } // if
                     
                     // list players
                     else if (strcmp(arg1, "list") == 0)
                     {
+                        memset(buf, '\0', BUFSIZE);
                         Player *temp = players;
                         while (temp != NULL)
                         {
@@ -222,12 +226,13 @@ int main() {
                             temp = temp->next;
                         }
                         send(socket_source, buf, sizeof(buf), 0);
+                        memset(buf, '\0', BUFSIZE);
                     }
 
                     // invite player
                     else if (strcmp(arg1, "invite") == 0)
                     {
-                        memset(buf,0,BUFSIZE);
+                        memset(buf, '\0', BUFSIZE);
                         int dest_fd;
                         Player *src, *dest;
                         src = players;
@@ -271,12 +276,13 @@ int main() {
                             sprintf(buf, "player %s is not existed.", arg2);
                             send(socket_source, buf, sizeof(buf), 0);
                         }
+                        memset(buf, '\0', BUFSIZE);
                     } // else if invite
 
                     // accept game invitation
                     else if (strcmp(arg1, "accept") == 0)
                     {
-                        memset(buf,0,BUFSIZE);
+                        memset(buf, '\0', BUFSIZE);
                         Player *src, *dest;
                         src = players;
                         dest = players;
@@ -346,6 +352,7 @@ int main() {
                                                     , new_board->board[3], new_board->board[4], new_board->board[5]
                                                     , new_board->board[6], new_board->board[7], new_board->board[8]);
                                         send(dest->sockfd, buf, sizeof(buf), 0);
+                                        memset(buf, '\0', BUFSIZE);
                                         sprintf(buf, 
                                                     "\n\n"
                                                     " %c | %c | %c \n"
@@ -357,6 +364,7 @@ int main() {
                                                     , new_board->board[3], new_board->board[4], new_board->board[5]
                                                     , new_board->board[6], new_board->board[7], new_board->board[8]);
                                         send(src->sockfd, buf, sizeof(buf), 0);
+                                        memset(buf, '\0', BUFSIZE);
                                         break;
                                     }
                                 } // while
@@ -372,13 +380,15 @@ int main() {
                         {
                             sprintf(buf, "account %s is not existed.", arg2);
                             send(socket_source, buf, sizeof(buf), 0);
+                            memset(buf, '\0', BUFSIZE);
                         }
+                        memset(buf, '\0', BUFSIZE);
                     } // else if accept
 
                     // set the position
                     else if (strcmp(arg1, "set") == 0)
                     {
-                        memset(buf,0,BUFSIZE);
+                        memset(buf, '\0', BUFSIZE);
                         Player *src, *dest;
                         src = players; dest = players;
                         Gameboard *board, *pre_board;
@@ -406,6 +416,7 @@ int main() {
                                     sprintf(buf, "No game is existed between you and %s\n\n", arg3);
                                     strcat(buf, "try usage : invite {player} to invite the player!");
                                     send(socket_source, buf, sizeof(buf), 0);
+                                    memset(buf, '\0', BUFSIZE);
                                 }
                                 else
                                 {
@@ -418,6 +429,7 @@ int main() {
                                         }
                                         strcpy(buf, "the position you select has been set!");
                                         send(socket_source, buf, sizeof(buf), 0);
+                                        memset(buf, '\0', BUFSIZE);
                                     }
                                     else
                                     {
@@ -447,6 +459,7 @@ int main() {
                                             fprintf(stderr, "failed to get the src name while setting\n");
                                             strcpy(buf, "system error\ntry to type instruction again!");
                                             send(socket_source, buf, sizeof(buf), 0);
+                                            memset(buf, '\0', BUFSIZE);
                                         }
                                         else
                                         {
@@ -508,7 +521,7 @@ int main() {
                                                             , board->board[3], board->board[4], board->board[5]
                                                             , board->board[6], board->board[7], board->board[8]);
                                                 send(dest->sockfd, buf, sizeof(buf), 0);
-
+                                                memset(buf, '\0', BUFSIZE);
                                                 sprintf(buf, "\nYou choose %d\n"
                                                             "\n\n"
                                                             " %c | %c | %c \n"
@@ -521,6 +534,7 @@ int main() {
                                                             , board->board[3], board->board[4], board->board[5]
                                                             , board->board[6], board->board[7], board->board[8]);
                                                 send(src->sockfd, buf, sizeof(buf), 0);
+                                                memset(buf, '\0', BUFSIZE);
                                             }
                                             else
                                             {
@@ -564,12 +578,12 @@ int main() {
                                                 strcat(buf, " (5) watch {username} --Watch other's game \n");
                                                 strcat(buf, " (6) send {username} {message} --Send a message to other player \n");
                                                 strcat(buf, " (7) game list --view player who is in the game\n");
-                                                strcat(buf, " (8) performance --look your performance");
+                                                strcat(buf, " (8) performance --look your performance\n");
                                                 strcat(buf, " (9) logout \n\n");
                                                 
                                                 send(src->sockfd, buf, sizeof(buf), 0);
                                                 send(dest->sockfd, buf, sizeof(buf), 0);
-                                                memset(buf,0,BUFSIZE);
+                                                memset(buf, '\0', BUFSIZE);
                                                 pre_board->next = board->next;
                                                 free(board);
                                             }
@@ -583,13 +597,15 @@ int main() {
                         {
                             sprintf(buf, "NO player %s exists.", arg3);
                             send(socket_source, buf, sizeof(buf), 0);
+                            memset(buf, '\0', BUFSIZE);
                         }
+                        memset(buf, '\0', BUFSIZE);
                     } // else if (set)
                     
                     // logout 
                     else if (strcmp(arg1, "logout") == 0)
                     {
-                        memset(buf,0,BUFSIZE);
+                        memset(buf, '\0', BUFSIZE);
                         Player *temp = players;
                         while (temp != NULL)
                         {
@@ -610,8 +626,10 @@ int main() {
                         send(socket_source, buf, sizeof(buf), 0);
                                 sprintf(buf, "Goobye, %s!", temp->account);
                                 printf("%s has just logged out!\n", temp->account);
+                                memset(buf, '\0', BUFSIZE);
                                 break;
                             }
+                            
                             temp = temp->next;
                         }
                         if (temp == NULL)
@@ -619,12 +637,13 @@ int main() {
                             strcpy(buf, "You should login first!");
                         }
                         send(socket_source, buf, strlen(buf), 0);
+                        memset(buf, '\0', BUFSIZE);
                     }
 
                     // view the list of gaming players
-                    else if (strcmp(arg1, "gaming") == 0 && strcmp(arg2, "list") == 0)
+                    else if (strcmp(arg1, "game") == 0 && strcmp(arg2, "list") == 0)
                     {
-                        memset(buf,0,BUFSIZE);
+                        memset(buf, '\0', BUFSIZE);
                         Gameboard *board = boards;
                         strcpy(buf, "Gaming list :");
                         // traverse the boards
@@ -660,12 +679,13 @@ int main() {
                             strcpy(buf, "No players are gaming!");
                         }
                         send(socket_source, buf, strlen(buf), 0);
+                        memset(buf, '\0', BUFSIZE);
                     } // else if view gaming list
 
                     // Watch the specific gameboard position
                     else if (strcmp(arg1, "watch") == 0)
                     {
-                        memset(buf,0,BUFSIZE);
+                        memset(buf, '\0', BUFSIZE);
                         Player *p1, *p2, *tra_p;
                         tra_p = players;
                         Gameboard *board = boards;
@@ -699,6 +719,7 @@ int main() {
                                             , board->board[3], board->board[4], board->board[5]
                                             , board->board[6], board->board[7], board->board[8]);
                                 send(socket_source, buf, strlen(buf), 0);
+                                memset(buf, '\0', BUFSIZE);
                                 break;
                             }
                             board = board->next;
@@ -707,12 +728,13 @@ int main() {
                         {
                             strcpy(buf, "No gaming existed!");
                             send(socket_source, buf, strlen(buf), 0);
+                            memset(buf, '\0', BUFSIZE);
                         }
                     }
 
                     // show the performance
                     else if (strcmp(arg1, "performance") == 0){
-                        memset(buf,0,BUFSIZE);
+                        memset(buf, '\0', BUFSIZE);
                         Player *player = players;
                         while (player != NULL)
                         {
@@ -731,12 +753,13 @@ int main() {
                             sprintf(buf, "server failed to match the player!");
                         }
                         send(socket_source, buf, strlen(buf), 0);
+                        memset(buf, '\0', BUFSIZE);
                     }
 
                     else if(strcmp(arg1,"send")==0)
                     {
                         
-                        memset(buf,0,BUFSIZE);
+                        memset(buf, '\0', BUFSIZE);
                         Player *src, *dest;
                         src = players;
                         dest = players;
@@ -745,6 +768,7 @@ int main() {
                              strcpy(buf,"Usage:\n send {username} {message}\n");
                              strcat(buf,"You miss the person who you want to send message!\n ");
                              send(socket_source,buf,strlen(buf),0);
+                             memset(buf, '\0', BUFSIZE);
                         }
                         else{
                             while (dest != NULL)
@@ -762,6 +786,7 @@ int main() {
                                             if(arg3 == NULL){
                                                 strcpy(buf,"You don't type in any messages!!\n");
                                                 send(src->sockfd,buf,strlen(buf),0);
+                                                memset(buf, '\0', BUFSIZE);
                                             }
                                             else{
                                                 strcpy(buf,src->account);
@@ -774,6 +799,7 @@ int main() {
                                                 strcat(buf,arg3);
                                                 strcat(buf,"\n");
                                                 send(src->sockfd,buf,strlen(buf),0);
+                                                memset(buf, '\0', BUFSIZE);
                                                 
                                             }
                                             break;
@@ -795,9 +821,10 @@ int main() {
                         strcat(buf, " (5) watch {username} --Watch other's game \n");
                         strcat(buf, " (6) send {username} {message} --Send a message to other player \n");
                         strcat(buf, " (7) game list --view player who is in the game\n");
-                        strcat(buf, " (8) performance --look your performance");
+                        strcat(buf, " (8) performance --look your performance\n");
                         strcat(buf, " (9) logout \n\n");
                         send(socket_source, buf, sizeof(buf), 0);
+                        memset(buf, '\0', BUFSIZE);
                     }
                     bzero(buf, sizeof(buf));
                 } // if recv()
