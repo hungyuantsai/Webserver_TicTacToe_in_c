@@ -48,7 +48,7 @@ int main (int argc, char *argv[])
     printf( " (5) watch {username} --Watch other's game \n");
     printf( " (6) send {username} {message} --Send a message to other player \n");
     printf( " (7) game list --view player who is in the game\n");
-    printf( " (8) performance --look your perfomance");
+    printf( " (8) performance --look your perfomance\n");
     printf( " (9) logout \n\n");
 
 
